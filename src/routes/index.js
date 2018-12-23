@@ -1,36 +1,22 @@
-// Import our Controllers
-const carController = require('../controllers/carController')
+// Import routes
 
-// Import Swagger documentation
-// const documentation = require('./documentation/carApi')
+const agencyRoutes = require('./agency.routes')
+const pictureRoutes = require('./picture.routes')
+const userRoutes = require('./user.routes')
+const videoRoutes = require('./video.routes')
+const express = require('express')
+const router = express.Router()
 
-const routes = [
-  {
-    method: 'GET',
-    url: '/api/cars',
-    handler: carController.getCars
-  },
-  {
-    method: 'GET',
-    url: '/api/cars/:id',
-    handler: carController.getSingleCar
-  },
-  {
-    method: 'POST',
-    url: '/api/cars',
-    handler: carController.addCar,
-    // schema: documentation.addCarSchema
-  },
-  {
-    method: 'PUT',
-    url: '/api/cars/:id',
-    handler: carController.updateCar
-  },
-  {
-    method: 'DELETE',
-    url: '/api/cars/:id',
-    handler: carController.deleteCar
-  }
-]
+/** GET / - Check service health */
+router.get('/api', (req, res) =>
+  res.send('OK man')
+);
 
-module.exports = routes
+router.use('/api/agencys', agencyRoutes),
+router.use('/api/pictures', pictureRoutes),
+router.use('/api/users', userRoutes),
+router.use('/api/videos', videoRoutes)
+
+
+module.exports = router
+
