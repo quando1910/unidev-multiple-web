@@ -1,10 +1,25 @@
 // Import Swagger documentation
-// const documentation = require('./documentation/carApi')
-const router = require('../core/base/route')
-let { controller, uri, routes } = router('user')
+const express = require('express')
+const router = express.Router()
+const controller = require(`../controllers/user.controller`)
 
-/**
- * Adding new route here
- */
+/* Enable if you want to validate */
+// const validate = require('express-validation')
+// const Validation = require('./documentation/userApi')
 
-module.exports = routes
+/* GET all users. */
+router.get('/', controller.index)
+
+/* Show a user. */
+router.get('/:id', controller.show)
+
+// /* Create a user. */
+router.post('/', controller.new)
+
+/* Update a user. */
+router.put('/:id', controller.update)
+
+/* Delete a user. */
+router.delete('/:id', controller.delete)
+
+module.exports = router

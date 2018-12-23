@@ -112,7 +112,7 @@ changeRouteIndex = () => {
       routeName = kebabToCamel(`${partOfFile[0]}-${partOfFile[1]}`);
       routeFile = `${partOfFile[0]}.${partOfFile[1]}`;
       contentRequires.push(`const ${routeName} = require('./${routeFile}')`);
-      contentRoutes.push(`...${routeName}`);
+      contentRoutes.push(`router.use('/api/${partOfFile[0]}s', ${routeName})`);
     }
   });
   let contents = fs.readFileSync(`${templateDir}routes.js`, 'utf8');

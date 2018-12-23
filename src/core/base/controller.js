@@ -1,68 +1,49 @@
+
+
 module.exports = (model) => {
   // External Dependancies
-  const boom = require('boom')
-  
+  const asyncMiddleware = fn => (req, res, next) => {
+    Promise.resolve(fn(req, res, next))
+      .then(data => res.send(data))
+      .catch(next)
+    };
   // Get Data Models
   let obj = {};
   obj[model] = require(`../../models/${model}`)
   
   return {
-    boom: boom,
     model: obj[model],
+    asyncMiddleware: asyncMiddleware,
     actions: {
-      test: async (req, reply) => {
-        try {
-          return `${model} works`
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      },
-      index: async (req, reply) => {
-        try {
-          const cars = await obj[model].find()
-          return cars
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      },
-      detail: async (req, reply) => {
-        try {
-          const id = req.params.id
-          const car = await obj[model].findById(id)
-          return car
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      },
-      new: async (req, reply) => {
-        try {
-          const objectModel = window[model]
-          const car = new objectModel(req.body)
-          return obj[model].save()
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      },
-      update: async (req, reply) => {
-        try {
-          const id = req.params.id
-          const car = req.body
-          const { ...updateData } = car
-          const update = await obj[model].findByIdAndUpdate(id, updateData, { new: true })
-          return update
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      },
-      delete: async (req, reply) => {
-        try {
-          const id = req.params.id
-          const car = await obj[model].findByIdAndRemove(id)
-          return car
-        } catch (err) {
-          throw boom.boomify(err)
-        }
-      }
+      test: asyncMiddleware(async (req, res, next) => {
+        return `${model} works`
+      }),
+      index: asyncMiddleware(async (req, res, next) => {
+        const cars = await obj[model].find()
+        return cars
+      }),
+      show: asyncMiddleware(async (req, res, next) => {
+        const id = req.params.id
+        const car = await obj[model].findById(id)
+        return car
+      }),
+      new: asyncMiddleware(async (req, res, next) => {
+        const objectModel = obj[model]
+        const item = new objectModel(req.body)
+        return item.save()
+      }),
+      update: asyncMiddleware(async (req, res, next) => {
+        const id = req.params.id
+        const car = req.body
+        const { ...updateData } = car
+        const update = await obj[model].findByIdAndUpdate(id, updateData, { new: true })
+        return update
+      }),
+      delete: asyncMiddleware(async (req, res, next) => {
+        const id = req.params.id
+        const car = await obj[model].findByIdAndRemove(id)
+        return car
+      })
     }
   }
 }

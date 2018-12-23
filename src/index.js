@@ -1,39 +1,54 @@
-// Require the fastify framework and instantiate it
-const fastify = require('fastify')({
-  logger: true
-})
-
-// Require external modules
+require('dotenv').config()
+const cluster = require('cluster')
+const workers = process.env.WORKERS || require('os').cpus().length
+const app = require('./lib/express')
 const mongoose = require('mongoose')
 
-// Import Routes
-const routes = require('./routes')
+// Require the fastify framework and instantiate it
 
-// Import Swagger Options
-const swagger = require('./config/swagger')
+// Worker for unstopped api
+if (cluster.isMaster  && !module.parent) {
+  console.log('start cluster with %s workers', workers)
+  for (var i = 0; i < workers; ++i) {
+    var worker = cluster.fork().process;
+    console.log('worker %s started.', worker.pid)
+  }
+  cluster.on('exit', function(worker) {
+    console.log('worker %s died. restart...', worker.process.pid)
+    cluster.fork()
+  });
+} else {
+  // Require external modules
+  const config = require('./config')
 
-// Register Swagger
-fastify.register(require('fastify-swagger'), swagger.options)
-
-// Connect to DB
-mongoose.connect('mongodb://localhost/mycargarage')
-  .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.log(err))
-
-// Loop over each route
-routes.forEach((route, index) => {
-  fastify.route(route)
-})
-
-// Run the server!
-const start = async () => {
-  try {
-    await fastify.listen(3000)
-    fastify.swagger()
-    fastify.log.info(`server listening on ${fastify.server.address().port}`)
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
+  if (!module.parent) {
+  // Connect to DB
+    mongoose.connect(config.db.url)
+      .then(() => console.log('MongoDB connected...'))
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
+      const start = async () => {
+        app.listen(config.port, '0.0.0.0')
+        app.on('listening', () => {
+          console.log(`===================================`)
+          console.log(`Server start at port ${config.port}`)
+          console.log(`===================================`)
+        });
+        app.on('error', (e) => {
+          console.error(`ERROR: ${e.message}`);
+        });
+      }
+      start()
   }
 }
-start()
+
+process.on('uncaughtException', function (err) {
+  console.error((new Date).toUTCString() + ' uncaughtException:', err.message)
+  console.error(err.stack)
+  process.exit(1)
+})
+
+module.exports = app
+// Run the server!
