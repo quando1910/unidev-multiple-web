@@ -1,7 +1,7 @@
 {
-  "name": "fastify-api",
+  "name": "Multiple Web",
   "version": "1.0.0",
-  "description": "A blazing fast REST APIs with Node.js, MongoDB, Fastify and Swagger.",
+  "description": "A project for multiple website.",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
