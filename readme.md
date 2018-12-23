@@ -1,15 +1,14 @@
-# A blazing fast REST APIs with Node.js, MongoDB, Fastify and Swagger.
+# A Multiple Web Project API integrated with Express, Docker, Mongoose.
 
 > A Node.js project
 
 ## Build Setup
+- Set up the `.env`
 
 ``` bash
 # install dependencies
-npm install
-
+docker-compose up --build
 # serve with hot reload at localhost:8080
-npm start
 ```
 ## Prerequisites
 - Nodejs
