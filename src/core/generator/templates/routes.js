@@ -9,6 +9,10 @@ router.get('/api', (req, res) =>
   res.send('OK man')
 );
 
+router.get('/api/checkLogin',jwtCheck, (req, res) =>
+  res.status(200).send('Login Successful')
+);
+
 __ROUTES__
 
 

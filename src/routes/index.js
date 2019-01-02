@@ -1,11 +1,18 @@
 // Import routes
-const authRoutes = require('./auth.routes')
+
 const agencyRoutes = require('./agency.routes')
+const categoryRoutes = require('./category.routes')
+const articleRoutes = require('./article.routes')
+const albumRoutes = require('./album.routes')
+const authRoutes = require('./auth.routes')
 const pictureRoutes = require('./picture.routes')
 const userRoutes = require('./user.routes')
 const videoRoutes = require('./video.routes')
+const publicRoutes = require('./public.routes')
 const express = require('express')
 const router = express.Router()
+
+const appCtrl = require('../controllers/app.controller')
 const expressjwt = require('express-jwt')
 
 const jwtCheck = expressjwt({
@@ -18,15 +25,19 @@ router.get('/api', (req, res) =>
 );
 
 router.get('/api/checkLogin',jwtCheck, (req, res) =>
-  res.status(200).send('Login Successful')
+res.status(200).send('Login Successful')
 );
 
-router.use('/api/auth', authRoutes),
-router.use('/api/agencys', agencyRoutes),
-router.use('/api/pictures', pictureRoutes),
+router.use('/api/agencys',  agencyRoutes),
+router.use('/api/articles', articleRoutes),
+router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
+router.use('/api/auths', authRoutes),
+router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
 router.use('/api/users', jwtCheck, userRoutes),
 router.use('/api/videos', videoRoutes)
+router.use('/api/albums', albumRoutes)
 
+router.use('/public', publicRoutes)
 
 module.exports = router
 

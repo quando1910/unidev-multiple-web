@@ -25,7 +25,6 @@ actions.new = asyncMiddleware(async (req, res, next) => {
 
 moreFunction = {
   aboutMe: asyncMiddleware(async (req, res, next) => {
-    console.log(1231231231223)
     const user = await model.findOne({_id: req.user.id})
     return user
   }),
