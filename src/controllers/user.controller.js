@@ -7,7 +7,7 @@ var Agency = require('../models/Agency')
  * Adding new action here
  */
 
-actions.new = asyncMiddleware(async (req, reply) => {
+actions.new = asyncMiddleware(async (req, res, next) => {
   let agency = new Agency(req.body.agency)
   const agen = await agency.save()
   agen['role'] = 0
@@ -20,7 +20,18 @@ actions.new = asyncMiddleware(async (req, reply) => {
     adminType: req.body.adminType,
     agencies: agen
   })
-  return user
+  return user.save()
 })
 
-module.exports = actions
+moreFunction = {
+  aboutMe: asyncMiddleware(async (req, res, next) => {
+    const user = await model.findOne({_id: req.user.id})
+    return user
+  }),
+  editMe: asyncMiddleware(async (req, res, next) => {
+    const user = await model.findByIdAndUpdate({_id: req.user.id}, req.body)
+    return user
+  })
+}
+
+module.exports = {...actions, ...moreFunction}

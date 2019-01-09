@@ -6,7 +6,7 @@ module.exports = (model) => {
     Promise.resolve(fn(req, res, next))
       .then(data => res.send(data))
       .catch(next)
-    };
+  }
   // Get Data Models
   let obj = {};
   obj[model] = require(`../../models/${model}`)

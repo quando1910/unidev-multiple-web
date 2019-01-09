@@ -37,9 +37,6 @@ var upload = multer({ storage: storage })
 /* GET all users. */
 router.get('/', controller.index)
 
-/* Show a user. */
-router.get('/:id', controller.show)
-
 // /* Create a user. */
 router.post('/', upload.any(), controller.new)
 

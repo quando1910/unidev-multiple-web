@@ -56,11 +56,11 @@ inquirer.prompt(STEPS)
       msgs.push(newFile);
     }; 
     // change route index
-    const changedFile = changeRouteIndex();
-    msgs.push(`------------------------------------
-    \nFile Changeds:
-    `);
-    msgs.push(changedFile);
+    // const changedFile = changeRouteIndex();
+    // msgs.push(`------------------------------------
+    // \nFile Changeds:
+    // `);
+    // msgs.push(changedFile);
     console.log(msgs.join('\n'));
   }
 );
@@ -96,28 +96,28 @@ createDirectoryContents = (fileName, targetDirs) => {
   }
 }
 
-changeRouteIndex = () => {
-  const routes = fs.readdirSync(routeDir);
-  let partOfFile = [];
-  let routeName = '';
-  let routeFile = '';
-  let contentRequires = [];
-  let contentRoutes = [];
-  routes.forEach((file) => {
-    const origFilePath = `${routeDir}${file}`;
-    // get stats about the current file
-    const stats = fs.statSync(origFilePath);
-    if (stats.isFile() && file !== 'index.js') {
-      partOfFile = file.split('.');
-      routeName = kebabToCamel(`${partOfFile[0]}-${partOfFile[1]}`);
-      routeFile = `${partOfFile[0]}.${partOfFile[1]}`;
-      contentRequires.push(`const ${routeName} = require('./${routeFile}')`);
-      contentRoutes.push(`router.use('/api/${partOfFile[0]}s', ${routeName})`);
-    }
-  });
-  let contents = fs.readFileSync(`${templateDir}routes.js`, 'utf8');
-  contents = contents.replace(/__REQUIRES__/g, contentRequires.join('\n'));
-  contents = contents.replace(/__ROUTES__/g, contentRoutes.join(',\n'));
-  fs.writeFileSync(`${routeDir}index.js`, contents, 'utf8');
-  return `${routeDir}index.js`;
-} 
+// changeRouteIndex = () => {
+  // const routes = fs.readdirSync(routeDir);
+  // let partOfFile = [];
+  // let routeName = '';
+  // let routeFile = '';
+  // let contentRequires = [];
+  // let contentRoutes = [];
+  // routes.forEach((file) => {
+  //   const origFilePath = `${routeDir}${file}`;
+  //   // get stats about the current file
+  //   const stats = fs.statSync(origFilePath);
+  //   if (stats.isFile() && file !== 'index.js') {
+  //     partOfFile = file.split('.');
+  //     routeName = kebabToCamel(`${partOfFile[0]}-${partOfFile[1]}`);
+  //     routeFile = `${partOfFile[0]}.${partOfFile[1]}`;
+  //     contentRequires.push(`const ${routeName} = require('./${routeFile}')`);
+  //     contentRoutes.push(`router.use('/api/${partOfFile[0]}s', ${routeName})`);
+  //   }
+  // });
+  // let contents = fs.readFileSync(`${templateDir}routes.js`, 'utf8');
+  // contents = contents.replace(/__REQUIRES__/g, contentRequires.join('\n'));
+  // contents = contents.replace(/__ROUTES__/g, contentRoutes.join(',\n'));
+  // fs.writeFileSync(`${routeDir}index.js`, contents, 'utf8');
+  // return `${routeDir}index.js`;
+// } 

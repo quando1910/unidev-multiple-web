@@ -1,28 +1,50 @@
 const constructor = require('../core/base/controller')
 let { actions, asyncMiddleware, model } = constructor('Picture')
-
+const sharp = require('sharp')
+const fs = require('fs')
 /**
  * Adding new action here
  */
 
-actions.new = asyncMiddleware(async (req, reply) => {
-  const link = req.files.map(x => `${x.fieldname}/${x.filename}`)
-  console.log(link)
+actions.new = asyncMiddleware(async (req, res) => {
+  console.log(req.body, req.params, req.files)
+  const files = req.files.map(x => {
+    sharp(x.path).resize(2048, 1365, {
+      fit: sharp.fit.inside,
+      withoutEnlargement: true
+    }).toBuffer(function(err, buffer) {
+        fs.writeFile(x.path, buffer, function(e) {
+      })
+    })
+    return new model({
+      name: x.originalname,
+      desc: req.body.desc,
+      path: x.path,
+      size: x.size,
+      mimetype: x.mimetype,
+      agency_id: req.info.team_id,
+      album_id: req.body.albumId,
+      article_id: req.body.articleId,
+      user_id: req.user.id
+    })
+  })
+  return await model.insertMany(files)
+})
 
-  // let pic = new Picture({
-  //   title: req.body.title,
-  //   desc: req.body.desc,
-  //   link: link,
-  //   type: req.body.type,
-  //   agency_id: res.locals.header.team_id,
-  //   album_id: req.body.albumId,
-  //   article_id: req.body.articleId
-  // });
+actions.index = asyncMiddleware(async (req, res) => {
+  return await model.find({agency_id: req.info.team_id, album_id: null, article_id: null})
+})
 
-  // pic.save((error, picture) => {
-  //   if (error) res.status(500).send(error);
-  //   res.status(201).json(picture);
-  // });
+actions.delete = asyncMiddleware(async (req, res) => {
+  let picture = await model.findById(req.params.id)
+  fs.unlink(`${picture.path}`, async (err) => {
+    if (err) throw err;
+    await model.findByIdAndRemove(req.params.id)
+  });
+})
+
+actions.updatePictureInAlbum = asyncMiddleware(async (req, res) => {
+  return await model.updateMany(req.body.pictures, {})
 })
 
 module.exports = actions
