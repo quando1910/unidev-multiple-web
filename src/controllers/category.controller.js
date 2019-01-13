@@ -25,12 +25,22 @@ actions.index = asyncMiddleware(async (req, res, next) => {
   return categories[`${req.query.type}Cat`]
 })
 
+actions.publicIndex = asyncMiddleware(async (req, res, next) => {
+  const categories = await model.findOne({ agency_id: req.params.agencyId })
+  return categories[`${req.query.type}Cat`]
+})
+
 actions.indexAll = asyncMiddleware(async (req, res, next) => {
   return await model.findOne({ agency_id: req.info.team_id })
 })
 
 actions.show = asyncMiddleware(async (req, res, next) => {
   const categories = await model.findOne({ agency_id: req.info.team_id })
+  return categories[`${req.query.type}Cat`].filter(x => x.id == req.params.id)[0]
+})
+
+actions.publicShow = asyncMiddleware(async (req, res, next) => {
+  const categories = await model.findOne({ agency_id: req.params.agencyId })
   return categories[`${req.query.type}Cat`].filter(x => x.id == req.params.id)[0]
 })
 

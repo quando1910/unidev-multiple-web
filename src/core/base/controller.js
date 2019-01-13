@@ -19,7 +19,8 @@ module.exports = (model) => {
         return `${model} works`
       }),
       index: asyncMiddleware(async (req, res, next) => {
-        const cars = await obj[model].find()
+        const cond = req.headers['agency-id'] ? { agency_id: req.headers['agency-id'] } : {}
+        const cars = await obj[model].find(cond)
         return cars
       }),
       show: asyncMiddleware(async (req, res, next) => {
@@ -29,7 +30,12 @@ module.exports = (model) => {
       }),
       new: asyncMiddleware(async (req, res, next) => {
         const objectModel = obj[model]
-        const item = new objectModel(req.body)
+        let ownerInfo = {
+          agency_id: req.info.team_id,
+          user_id: req.user.id
+        }
+        let payload = { ...req.body, ...ownerInfo }
+        const item = new objectModel(payload)
         return item.save()
       }),
       update: asyncMiddleware(async (req, res, next) => {
