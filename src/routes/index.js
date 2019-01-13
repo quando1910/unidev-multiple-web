@@ -22,22 +22,22 @@ const jwtCheck = expressjwt({
 /** GET / - Check service health */
 router.get('/api', (req, res) =>
   res.send('OK man')
-);
+)
 
 router.get('/api/checkLogin',jwtCheck, (req, res) =>
-res.status(200).send('Login Successful')
-);
+  res.status(200).send('Login Successful')
+)
 
+router.use('/public', publicRoutes),
 router.use('/api/agencys',  agencyRoutes),
 router.use('/api/articles', jwtCheck, appCtrl.check, articleRoutes),
 router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
 router.use('/api/auths', authRoutes),
 router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
 router.use('/api/users', userRoutes),
-router.use('/api/videos', videoRoutes)
+router.use('/api/videos', videoRoutes),
 router.use('/api/albums', albumRoutes)
 
-router.use('/public', publicRoutes)
 
 module.exports = router
 
