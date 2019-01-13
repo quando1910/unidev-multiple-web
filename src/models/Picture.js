@@ -8,6 +8,7 @@ const PictureSchema = new mongoose.Schema({
   type: Number,
   size: Number,
   mimetype: String,
+  favorite: Boolean,
   agency_id: {
     type: mongoose.Schema.ObjectId,
     ref: 'Agency'

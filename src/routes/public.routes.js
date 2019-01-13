@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
+const Picture = require(`../../models/Picture`)
 const albumCtrl = require(`../controllers/album.controller`)
 const articleCtrl = require(`../controllers/article.controller`)
 const videoCtrl = require(`../controllers/video.controller`)
@@ -11,7 +12,11 @@ const categoryCtrl = require(`../controllers/category.controller`)
 router.get('/pictures/uploads/*', function (req, res, next) {
   console.log(req.params[0], path.resolve(`./uploads/${req.params[0]}`))
   res.sendfile(path.resolve(`./uploads/${req.params[0]}`));
-}); 
+});
+
+router.get('/pictures', async (req, res, next) => {
+  return await Picture.find({agency_id: req.info.team_id, favorite: true, album_id: null, article_id: null})
+})
 
 router.get('/albums', albumCtrl.index)
 router.get('/albums/:id', albumCtrl.show)
