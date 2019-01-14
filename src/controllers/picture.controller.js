@@ -32,7 +32,12 @@ actions.new = asyncMiddleware(async (req, res) => {
 })
 
 actions.index = asyncMiddleware(async (req, res) => {
-  return await model.find({agency_id: req.info.team_id, album_id: null, article_id: null})
+  return await model.find({ 
+    $or: [
+      {agency_id: req.info.team_id, album_id: null, article_id: null},
+      {agency_id: req.info.team_id, favorite: true, article_id: null}
+    ] 
+  })
 })
 
 actions.delete = asyncMiddleware(async (req, res) => {
