@@ -19,7 +19,7 @@ router.get('/pictures/uploads/*', function (req, res, next) {
 });
 
 router.get('/pictures', async (req, res, next) => {
-  let pics = await Picture.find({agency_id: req.headers['agency-id'], favorite: true, album_id: null, article_id: null})
+  let pics = await Picture.find({agency_id: req.headers['agency-id'], favorite: true, article_id: null})
   res.json(pics)
 })
 
