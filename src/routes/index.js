@@ -34,7 +34,7 @@ router.use('/api/articles', jwtCheck, appCtrl.check, articleRoutes),
 router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
 router.use('/api/auths', authRoutes),
 router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
-router.use('/api/users', userRoutes),
+router.use('/api/users', jwtCheck, appCtrl.check, userRoutes),
 router.use('/api/videos', videoRoutes),
 router.use('/api/albums', albumRoutes)
 
