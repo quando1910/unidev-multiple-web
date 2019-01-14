@@ -21,6 +21,14 @@ const PictureSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Article'
   },
+  favorite: {
+    type: Boolean, 
+    default: false
+  },
+  slider: {
+    type: Boolean, 
+    default: false
+  },
   user_id: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
