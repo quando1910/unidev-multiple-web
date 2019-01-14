@@ -29,14 +29,14 @@ router.get('/api/checkLogin',jwtCheck, (req, res) =>
 )
 
 router.use('/public', publicRoutes),
-router.use('/api/agencys',  agencyRoutes),
+router.use('/api/agencys', agencyRoutes),
 router.use('/api/articles', jwtCheck, appCtrl.check, articleRoutes),
 router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
 router.use('/api/auths', authRoutes),
 router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
 router.use('/api/users', jwtCheck, appCtrl.check, userRoutes),
-router.use('/api/videos', videoRoutes),
-router.use('/api/albums', albumRoutes)
+router.use('/api/videos', jwtCheck, appCtrl.check, videoRoutes),
+router.use('/api/albums', jwtCheck, appCtrl.check, albumRoutes)
 
 
 module.exports = router

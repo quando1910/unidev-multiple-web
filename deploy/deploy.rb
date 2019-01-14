@@ -7,6 +7,7 @@ set :branch, 'master'
 set :deploy_to, "/var/www/#{fetch(:app)}"
 # set :linked_dirs, %w{.env}
 set :linked_files, %w{.env}
+set :linked_dirs, %w{uploads}
 set :keep_releases, 5
 
 namespace :deploy do
