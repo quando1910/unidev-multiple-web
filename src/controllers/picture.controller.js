@@ -7,7 +7,6 @@ const fs = require('fs')
  */
 
 actions.new = asyncMiddleware(async (req, res) => {
-  console.log(req.body, req.params, req.files)
   const files = req.files.map(x => {
     sharp(x.path).resize(2048, 1365, {
       fit: sharp.fit.inside,
