@@ -1,5 +1,3 @@
-
-
 module.exports = (model) => {
   // External Dependancies
   const asyncMiddleware = fn => (req, res, next) => {
@@ -19,7 +17,9 @@ module.exports = (model) => {
         return `${model} works`
       }),
       index: asyncMiddleware(async (req, res, next) => {
-        const cond = req.headers['agency-id'] ? { agency_id: req.headers['agency-id'] } : {}
+        var cond = req.headers['agency-id'] ? { agency_id: req.headers['agency-id'] } : {}
+        const queryCond = req.query
+        cond = {...cond, ...queryCond}
         const cars = await obj[model].find(cond)
         return cars
       }),
