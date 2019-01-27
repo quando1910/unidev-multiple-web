@@ -31,7 +31,7 @@ actions.indexwCode = asyncMiddleware(async (req, res, next) => {
 })
 
 actions.publicIndex = asyncMiddleware(async (req, res, next) => {
-  const categories = await model.findOne({ agency_id: req.params.agencyId })
+  const categories = await model.findOne({ agency_id: req.headers['agency-id'] })
   return categories[`${req.query.type}Cat`]
 })
 

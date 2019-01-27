@@ -36,7 +36,6 @@ module.exports.getAllItemInCategory = async function(obj) {
         as: `items`
       }
     },
-    { '$unwind': '$items' },
     {
       $project: {
         _id: 1,
@@ -45,6 +44,7 @@ module.exports.getAllItemInCategory = async function(obj) {
         items: 1
       }
     },
+    { '$unwind': '$items' },
     { 
       $addFields: {
         type : {
