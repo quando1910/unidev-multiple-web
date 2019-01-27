@@ -1,5 +1,6 @@
 const constructor = require('../core/base/controller')
 const Counter = require('../models/Counter')
+const Article = require('../models/Article')
 let { actions, asyncMiddleware, model } = constructor('Category')
 
 
@@ -23,6 +24,10 @@ actions.new = asyncMiddleware(async (req, res, next) => {
 actions.index = asyncMiddleware(async (req, res, next) => {
   const categories = await model.findOne({ agency_id: req.info.team_id })
   return categories[`${req.query.type}Cat`]
+})
+
+actions.indexwCode = asyncMiddleware(async (req, res, next) => {
+  return await model.getAllItemInCategory({typeName: req.query.type, agencyId: req.params.agencyId})
 })
 
 actions.publicIndex = asyncMiddleware(async (req, res, next) => {

@@ -15,7 +15,6 @@ router.get('/all', controller.indexAll)
 
 router.get('/:id', controller.show)
 
-
 // /* Create a category. */
 router.post('/', controller.new)
 
