@@ -27,7 +27,6 @@ actions.index = asyncMiddleware(async (req, res, next) => {
 })
 
 actions.indexwCode = asyncMiddleware(async (req, res, next) => {
-  console.log(req.headers)
   return await model.getAllItemInCategory({typeName: req.query.type, agencyId: req.headers['agency-id']})
 })
 

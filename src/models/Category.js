@@ -48,11 +48,14 @@ module.exports.getAllItemInCategory = async function(obj) {
     { 
       $addFields: {
         type : {
-          $filter: {
-            input: `$${obj.typeName}Cat`,
-            as: "item",
-            cond: { $eq: [ "$$item.id", 1 ] }
-          }
+          $arrayElemAt: [ 
+            { 
+              $filter: {
+                input: `$${obj.typeName}Cat`,
+                as: "item",
+                cond: { $eq: [ "$$item.id", 1 ] }
+              }
+            }, 0 ] 
         }
       }
     },

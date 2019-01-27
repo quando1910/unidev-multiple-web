@@ -33,7 +33,7 @@ router.get('/videos', videoCtrl.index)
 router.get('/videos/:id', videoCtrl.show)
 
 router.get('/categories/wcode', categoryCtrl.indexwCode)
-router.get('/categories/:agencyId', categoryCtrl.publicIndex) 
-router.get('/categories/:agencyId/details', categoryCtrl.publicShow)
+router.get('/categories', categoryCtrl.publicIndex) 
+router.get('/categories/:id', categoryCtrl.publicShow)
 
 module.exports = router
