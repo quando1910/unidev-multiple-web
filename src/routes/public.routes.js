@@ -32,7 +32,7 @@ router.get('/articles/:id', articleCtrl.show)
 router.get('/videos', videoCtrl.index)
 router.get('/videos/:id', videoCtrl.show)
 
-router.get('/categories/:agencyId/wcode', categoryCtrl.indexwCode)
+router.get('/categories/wcode', categoryCtrl.indexwCode)
 router.get('/categories/:agencyId', categoryCtrl.publicIndex) 
 router.get('/categories/:agencyId/details', categoryCtrl.publicShow)
 
