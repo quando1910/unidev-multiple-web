@@ -53,7 +53,7 @@ module.exports.getAllItemInCategory = async function(obj) {
               $filter: {
                 input: `$${obj.typeName}Cat`,
                 as: "item",
-                cond: { $eq: [ "$$item.id", 1 ] }
+                cond: { $eq: [ "$$item.id", "$type" ] }
               }
             }, 0 ] 
         }
