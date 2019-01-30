@@ -19,9 +19,9 @@ module.exports = (model) => {
       index: asyncMiddleware(async (req, res, next) => {
         let cond = {}
         if (req.headers['agency-id']) {
-          cond = req.headers['agency-id']
+          cond = { agency_id: req.headers['agency-id'] }
         } else if (req.info.team_id) {
-          cond = req.info.team_id
+          cond = { agency_id: req.info.team_id }
         }
         const queryCond = req.query
         cond = {...cond, ...queryCond}
