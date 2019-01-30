@@ -21,7 +21,7 @@ module.exports = (model) => {
         if (req.headers['agency-id']) {
           cond = req.headers['agency-id']
         } else if (req.info.team_id) {
-          cond = req.headers['agency-id']
+          cond = req.info.team_id
         }
         const queryCond = req.query
         cond = {...cond, ...queryCond}
