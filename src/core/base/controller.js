@@ -17,7 +17,12 @@ module.exports = (model) => {
         return `${model} works`
       }),
       index: asyncMiddleware(async (req, res, next) => {
-        var cond = req.headers['agency-id'] ? { agency_id: req.headers['agency-id'] } : {}
+        let cond = {}
+        if (req.headers['agency-id']) {
+          cond = req.headers['agency-id']
+        } else if (req.info.team_id) {
+          cond = req.headers['agency-id']
+        }
         const queryCond = req.query
         cond = {...cond, ...queryCond}
         const cars = await obj[model].find(cond)
