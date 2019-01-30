@@ -3,6 +3,7 @@ const cluster = require('cluster')
 const workers = process.env.WORKERS || require('os').cpus().length
 const app = require('./lib/express')
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 
 // Require the fastify framework and instantiate it
 

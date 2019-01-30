@@ -47,13 +47,11 @@ module.exports = (model) => {
         const id = req.params.id
         const car = req.body
         const { ...updateData } = car
-        const update = await obj[model].findByIdAndUpdate(id, updateData, { new: true })
-        return update
+        return await obj[model].findOneAndUpdate({ _id: id, agency_id: req.info.team_id }, updateData, { new: true })
       }),
       delete: asyncMiddleware(async (req, res, next) => {
         const id = req.params.id
-        const car = await obj[model].findByIdAndRemove(id)
-        return car
+        return await obj[model].findOneAndRemove({ _id: id, agency_id: req.info.team_id })
       })
     }
   }
