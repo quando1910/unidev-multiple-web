@@ -27,7 +27,11 @@ actions.index = asyncMiddleware(async (req, res, next) => {
 })
 
 actions.indexwCode = asyncMiddleware(async (req, res, next) => {
-  return await model.getAllItemInCategory({typeName: req.query.type, agencyId: req.headers['agency-id']})
+  return await model.getAllItemInCategory({typeName: req.query.type, agencyId: req.headers['agency-id'] || req.info.team_id})
+})
+
+actions.indexEachCategorywCode = asyncMiddleware(async (req, res, next) => {
+  return await model.getAllItemInEachCategory({typeName: req.query.type, id: req.query.id, agencyId: req.headers['agency-id'] || req.info.team_id})
 })
 
 actions.publicIndex = asyncMiddleware(async (req, res, next) => {
