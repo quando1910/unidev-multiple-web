@@ -1,29 +1,25 @@
 // Import Swagger documentation
 const express = require('express')
 const router = express.Router()
-const controller = require(`../controllers/category.controller`)
+const controller = require(`../controllers/product.controller`)
 
 /* Enable if you want to validate */
 // const validate = require('express-validation')
-// const Validation = require('./documentation/categoryApi')
+// const Validation = require('./documentation/productApi')
 
-/* GET all categorys. */
+/* GET all products. */
 router.get('/', controller.index)
 
-/* Show a category. */
-router.get('/all', controller.indexAll)
-
+/* Show a product. */
 router.get('/:id', controller.show)
 
-// /* Create a category. */
+// /* Create a product. */
 router.post('/', controller.new)
 
-router.get('/wcode/items', controller.indexEachCategorywCode)
-
-/* Update a category. */
+/* Update a product. */
 router.put('/:id', controller.update)
 
-/* Delete a category. */
+/* Delete a product. */
 router.delete('/:id', controller.delete)
 
 module.exports = router

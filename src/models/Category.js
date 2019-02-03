@@ -8,6 +8,7 @@ const CategorySchema = new mongoose.Schema({
     ref: 'Agency'
   },
   articlesCat: Array,
+  productsCat: Array,
   videosCat: Array,
   albumsCat: Array,
   picturesCat: Array,
@@ -41,7 +42,15 @@ module.exports.getAllItemInCategory = async function(obj) {
         _id: 1,
         agency_id: 1,
         [`${obj.typeName}Cat`]: 1,
-        items: 1
+        items: {
+          $filter: {
+             input: "$items",
+             as: "item",
+             cond: { 
+               $eq: [ "$$item.agency_id", mongoose.Types.ObjectId(obj.agencyId) ]
+              }
+          }
+        }
       }
     },
     { '$unwind': '$items' },
@@ -66,6 +75,41 @@ module.exports.getAllItemInCategory = async function(obj) {
     },
     { $group : 
       { _id : "$type", data: { $push: "$$ROOT" } } 
+    }
+  ])
+}
+
+module.exports.getAllItemInEachCategory = async function(obj) {
+  return await Category.aggregate([
+    {
+      $lookup: {
+        from: `${obj.typeName}`,
+        localField: `${obj.typeName}Cat.id`,
+        foreignField: 'type',
+        as: `items`
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        agency_id: 1,
+        [`${obj.typeName}Cat`]: 1,
+        items: {
+          $filter: {
+             input: "$items",
+             as: "item",
+             cond: { 
+               $eq: [ "$$item.agency_id", mongoose.Types.ObjectId(obj.agencyId) ],
+               $eq: [ "$$item.type", +obj.id ] 
+              }
+          }
+        }
+      }
+    },
+    { 
+      $match : {
+        agency_id: mongoose.Types.ObjectId(obj.agencyId)
+      }
     }
   ])
 }

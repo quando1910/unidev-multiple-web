@@ -8,6 +8,7 @@ const authRoutes = require('./auth.routes')
 const pictureRoutes = require('./picture.routes')
 const userRoutes = require('./user.routes')
 const videoRoutes = require('./video.routes')
+const productRoutes = require('./product.routes')
 const publicRoutes = require('./public.routes')
 const express = require('express')
 const router = express.Router()
@@ -36,8 +37,8 @@ router.use('/api/auths', authRoutes),
 router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
 router.use('/api/users', jwtCheck, appCtrl.check, userRoutes),
 router.use('/api/videos', jwtCheck, appCtrl.check, videoRoutes),
-router.use('/api/albums', jwtCheck, appCtrl.check, albumRoutes)
-
+router.use('/api/albums', jwtCheck, appCtrl.check, albumRoutes),
+router.use('/api/products', jwtCheck, appCtrl.check, productRoutes)
 
 module.exports = router
 
