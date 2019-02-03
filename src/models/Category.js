@@ -18,7 +18,7 @@ const CategorySchema = new mongoose.Schema({
   updated_at: { 
     type: Date 
   }
-})
+},{ strict: false })
 
 module.exports = Category = mongoose.model('Category', CategorySchema)
 
