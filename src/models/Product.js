@@ -8,8 +8,13 @@ const ProductSchema = new mongoose.Schema({
   thumbnail: String,
   costBuy: Number,
   shortDesc: String,
+  brand: String,
   desc: String,
   attributes: Object,
+  belongs_to: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Producttype'
+  },
   agency_id: {
     type: mongoose.Schema.ObjectId,
     ref: 'Agency'

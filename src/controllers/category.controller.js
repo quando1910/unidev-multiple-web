@@ -21,6 +21,11 @@ actions.new = asyncMiddleware(async (req, res, next) => {
     { upsert: true, new: true})
 })
 
+actions.indexAdd = asyncMiddleware(async (req, res, next) => {
+  const categories = await model.findOne({ agency_id: req.info.team_id })
+  return categories[`${req.query.type}List`]
+})
+
 actions.index = asyncMiddleware(async (req, res, next) => {
   const categories = await model.findOne({ agency_id: req.info.team_id })
   return categories[`${req.query.type}Cat`]

@@ -8,6 +8,7 @@ const articleCtrl = require(`../controllers/article.controller`)
 const videoCtrl = require(`../controllers/video.controller`)
 const categoryCtrl = require(`../controllers/category.controller`)
 const productCtrl = require(`../controllers/product.controller`)
+const aspectCtrl = require(`../controllers/aspect.controller`)
 
 router.get('/', function (req, res, next) {
   res.json('PUBLIC OK!')
@@ -39,5 +40,7 @@ router.get('/categories/:id', categoryCtrl.publicShow)
 
 router.get('/products', productCtrl.index)
 router.get('/products/:id', productCtrl.show)
+
+router.get('/aspects', aspectCtrl.indexItem)
 
 module.exports = router

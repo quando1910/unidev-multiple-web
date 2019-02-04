@@ -8,7 +8,7 @@ const CategorySchema = new mongoose.Schema({
     ref: 'Agency'
   },
   articlesCat: Array,
-  productsCat: Array,
+  productsList: Array,
   videosCat: Array,
   albumsCat: Array,
   picturesCat: Array,
