@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
 });
 
 /* Show a user. */
-router.get('/uploads/*', function (req, res, next) {
+router.get('/pictures/*', function (req, res, next) {
   res.sendfile(path.resolve(`./uploads/${req.params[0]}`));
 });
 
