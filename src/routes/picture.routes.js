@@ -46,4 +46,8 @@ router.put('/:id', controller.update)
 /* Delete a user. */
 router.delete('/:id', controller.delete)
 
+router.get('/uploads/*', function (req, res, next) {
+  res.sendfile(path.resolve(`./uploads/${req.params[0]}`));
+});
+
 module.exports = router
