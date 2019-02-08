@@ -21,7 +21,7 @@ router.get('/pictures/*', function (req, res, next) {
 });
 
 router.get('/uploads/*', function (req, res, next) {
-  res.sendfile(path.resolve(`./${req.params[0]}`));
+  res.sendfile(path.resolve(`./uploads/${req.params[0]}`));
 });
 
 router.get('/pictures', async (req, res, next) => {
