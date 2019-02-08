@@ -7,6 +7,7 @@ const AgencySchema = new mongoose.Schema({
     required: true
   },
   desc: String,
+  web: String,
   avatar: String,
   default: {
     type: Boolean,

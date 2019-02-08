@@ -49,6 +49,13 @@ module.exports = (model) => {
         const { ...updateData } = car
         return await obj[model].findOneAndUpdate({ _id: id, agency_id: req.info.team_id }, updateData, { new: true })
       }),
+      upsert: asyncMiddleware(async (req, res, next) => {
+        const id = req.params.id
+        const car = req.body
+        const { ...updateData } = car
+        console.log(1234567, updateData)
+        return await obj[model].findOneAndUpdate({ _id: id, agency_id: req.info.team_id }, updateData, { new: true })
+      }),
       delete: asyncMiddleware(async (req, res, next) => {
         const id = req.params.id
         return await obj[model].findOneAndRemove({ _id: id, agency_id: req.info.team_id })

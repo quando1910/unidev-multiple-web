@@ -8,7 +8,7 @@ module.exports = {
       const user = await model.findOne({_id: req.user.id})
       if (user.agencies.length > 0) {
         const team = user.agencies.filter(x => x.default === true)[0]
-        req.info = {team_id: team._id, role: team.role};
+        req.info = {team_id: team._id, web: team.web, role: team.role};
         console.log('Auth is OK')
         next()
       }

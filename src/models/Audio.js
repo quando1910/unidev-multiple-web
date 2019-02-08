@@ -1,11 +1,13 @@
 // External Dependancies
 const mongoose = require('mongoose')
 
-const VideoSchema = new mongoose.Schema({
+const AudioSchema = new mongoose.Schema({
   name: String,
   desc: String,
+  title: String,
+  path: String,
   type: Number,
-  link: String,
+  size: Number,
   agency_id: {
     type: mongoose.Schema.ObjectId,
     ref: 'Agency'
@@ -22,9 +24,9 @@ const VideoSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Video', VideoSchema)
+module.exports = mongoose.model('Audio', AudioSchema)
 
-VideoSchema.pre('save', function(next) {
+AudioSchema.pre('save', function(next) {
   this.updated_at = Date.now()
   next();
 })

@@ -16,14 +16,18 @@ router.get('/', function (req, res, next) {
 });
 
 /* Show a user. */
-router.get('/pictures/uploads/*', function (req, res, next) {
-  console.log(req.params[0], path.resolve(`./uploads/${req.params[0]}`))
+router.get('/uploads/*', function (req, res, next) {
   res.sendfile(path.resolve(`./uploads/${req.params[0]}`));
 });
 
 router.get('/pictures', async (req, res, next) => {
   let pics = await Picture.find({agency_id: req.headers['agency-id'], favorite: true, article_id: null})
   res.json(pics)
+})
+
+router.get('/audios', async (req, res, next) => {
+  let audios = await Audio.find({agency_id: req.headers['agency-id']})
+  res.json(audios)
 })
 
 router.get('/albums', albumCtrl.index)
