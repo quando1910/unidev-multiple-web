@@ -9,6 +9,8 @@ const AgencySchema = new mongoose.Schema({
   desc: String,
   web: String,
   avatar: String,
+  phone: Number,
+  address: String,
   default: {
     type: Boolean,
     default: false

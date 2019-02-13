@@ -35,7 +35,7 @@ router.get('/api/checkLogin',jwtCheck, (req, res) =>
 )
 
 router.use('/public', publicRoutes),
-router.use('/api/agencys', agencyRoutes),
+router.use('/api/agencys', jwtCheck, appCtrl.check, agencyRoutes),
 router.use('/api/articles', jwtCheck, appCtrl.check, articleRoutes),
 router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
 router.use('/api/auths', authRoutes),

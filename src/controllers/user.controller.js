@@ -8,25 +8,27 @@ var Agency = require('../models/Agency')
  */
 
 actions.new = asyncMiddleware(async (req, res, next) => {
-  let agency = new Agency(req.body.agency)
-  const agen = await agency.save()
-  agen['role'] = 0
+  const agenId = req.agen._id ? req.agen._id : req.info.team_id
+  const agency = { 
+    _id: agenId,
+    default: true,
+    role: 0
+  }
   const user = new model({
-    email: req.body.email,
-    password: req.body.password,
-    phone: req.body.phone,
-    name: req.body.name,
-    age: req.body.age,
-    adminType: req.body.adminType,
-    agencies: agen
+    email: req.body.user.email,
+    password: req.body.user.password,
+    phone: req.body.user.phone,
+    name: req.body.user.name,
+    age: req.body.user.age,
+    adminType: req.body.user.adminType,
+    agencies: agency
   })
   return user.save()
 })
 
 moreFunction = {
   aboutMe: asyncMiddleware(async (req, res, next) => {
-    const user = await model.findOne({_id: req.user.id})
-    return user
+    return await model.aboutMe(req.user.id)
   }),
   editMe: asyncMiddleware(async (req, res, next) => {
     const user = await model.findByIdAndUpdate({_id: req.user.id}, req.body)
