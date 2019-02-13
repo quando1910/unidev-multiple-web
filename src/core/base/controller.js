@@ -3,7 +3,11 @@ module.exports = (model) => {
   const asyncMiddleware = fn => (req, res, next) => {
     Promise.resolve(fn(req, res, next))
       .then(data => res.send(data))
-      .catch(next)
+      .catch(next => {
+        return res.status(next.status).json({
+          message: next.message
+        });
+      })
   }
   // Get Data Models
   let obj = {};
