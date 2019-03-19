@@ -11,6 +11,10 @@ const AgencySchema = new mongoose.Schema({
   avatar: String,
   phone: Number,
   address: String,
+  services: {
+    type: String,
+    default: []
+  },
   default: {
     type: Boolean,
     default: false

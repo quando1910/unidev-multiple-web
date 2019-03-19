@@ -9,6 +9,7 @@ const AspectSchema = new mongoose.Schema({
     ref: 'Agency'
   },
   productsList: Array,
+  contractsList: Array,
   created_at: { 
     type: Date, required: true, default: Date.now 
   },
