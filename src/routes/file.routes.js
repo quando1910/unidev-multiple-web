@@ -19,6 +19,8 @@ router.post('/', controller.new)
 /* Update a file. */
 router.put('/:id', controller.update)
 
+router.patch('/:id', controller.upsert)
+
 /* Delete a file. */
 router.delete('/:id', controller.delete)
 

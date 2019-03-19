@@ -57,7 +57,7 @@ module.exports = (model) => {
         const id = req.params.id
         const car = req.body
         const { ...updateData } = car
-        console.log(1234567, updateData)
+        console.log(await obj[model].findOneAndUpdate({ _id: id, agency_id: req.info.team_id }, updateData, { new: true }))
         return await obj[model].findOneAndUpdate({ _id: id, agency_id: req.info.team_id }, updateData, { new: true })
       }),
       delete: asyncMiddleware(async (req, res, next) => {
