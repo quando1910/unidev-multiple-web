@@ -13,6 +13,7 @@ const aspectRoutes = require('./aspect.routes')
 const producttypeRoutes = require('./producttype.routes')
 const publicRoutes = require('./public.routes')
 const audioRoutes = require('./audio.routes')
+const fileRoutes = require('./file.routes')
 const uploadRoutes = require('./upload.routes')
 
 const express = require('express')
@@ -41,6 +42,7 @@ router.use('/api/categories', jwtCheck, appCtrl.check, categoryRoutes),
 router.use('/api/auths', authRoutes),
 router.use('/api/pictures', jwtCheck, appCtrl.check, pictureRoutes),
 router.use('/api/audios', jwtCheck, appCtrl.check, audioRoutes),
+router.use('/api/files', jwtCheck, appCtrl.check, fileRoutes),
 router.use('/api/users', jwtCheck, appCtrl.check, userRoutes),
 router.use('/api/videos', jwtCheck, appCtrl.check, videoRoutes),
 router.use('/api/albums', jwtCheck, appCtrl.check, albumRoutes),

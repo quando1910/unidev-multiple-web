@@ -4,6 +4,7 @@ const router = express.Router()
 const path = require('path')
 const Picture = require(`../models/Picture`)
 const Audio = require(`../models/Audio`)
+const File = require(`../models/File`)
 const albumCtrl = require(`../controllers/album.controller`)
 const articleCtrl = require(`../controllers/article.controller`)
 const videoCtrl = require(`../controllers/video.controller`)
@@ -33,6 +34,12 @@ router.get('/pictures', async (req, res, next) => {
 router.get('/audios', async (req, res, next) => {
   let audios = await Audio.find({agency_id: req.headers['agency-id']})
   res.json(audios)
+})
+
+router.get('/files', async (req, res, next) => {
+  console.log(12312312323);
+  let files = await File.find({agency_id: req.headers['agency-id']})
+  res.json(files)
 })
 
 router.get('/albums', albumCtrl.index)
