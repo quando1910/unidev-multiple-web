@@ -12,6 +12,7 @@ const categoryCtrl = require(`../controllers/category.controller`)
 const productCtrl = require(`../controllers/product.controller`)
 const aspectCtrl = require(`../controllers/aspect.controller`)
 const productsTypesCtrl = require(`../controllers/producttype.controller`)
+const fileCtrl = require(`../controllers/file.controller`)
 
 router.get('/', function (req, res, next) {
   res.json('PUBLIC OK!')
@@ -41,6 +42,8 @@ router.get('/files', async (req, res, next) => {
   let files = await File.find({agency_id: req.headers['agency-id']})
   res.json(files)
 })
+
+router.get('/files/:id', fileCtrl.show)
 
 router.get('/albums', albumCtrl.index)
 router.get('/albums/:id', albumCtrl.show)

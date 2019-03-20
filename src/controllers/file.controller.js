@@ -15,7 +15,6 @@ actions.new = asyncMiddleware(async (req, res) => {
     agency_id: req.info.team_id,
     user_id: req.user.id
   })
-  console.log(fileRecord)
   return await fileRecord.save()
 })
 
